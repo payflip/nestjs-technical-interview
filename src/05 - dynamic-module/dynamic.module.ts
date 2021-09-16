@@ -14,6 +14,39 @@ export enum Language {
 
 export class GreetingI18nModule {
   static register(language: Language): DynamicModule {
-    return { module: Object };
+    switch (language) {
+      case Language.FR: {
+        return {
+          module: FrenchGreetService,
+          providers: [
+            { provide: GreetAbstractService, useClass: FrenchGreetService },
+          ],
+        };
+      }
+      case Language.NL: {
+        return {
+          module: DutchGreetService,
+          providers: [
+            { provide: GreetAbstractService, useClass: DutchGreetService },
+          ],
+        };
+      }
+      case Language.ES: {
+        return {
+          module: SpanishGreetService,
+          providers: [
+            { provide: GreetAbstractService, useClass: SpanishGreetService },
+          ],
+        };
+      }
+      default: {
+        return {
+          module: EnglishGreetService,
+          providers: [
+            { provide: GreetAbstractService, useClass: EnglishGreetService },
+          ],
+        };
+      }
+    }
   }
 }

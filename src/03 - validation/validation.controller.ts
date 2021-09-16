@@ -1,8 +1,10 @@
 import { Controller, Param, Body, Post } from '@nestjs/common';
+import { IsBoolean, IsNumberString, IsString } from 'class-validator';
 
 /** USE CLASS-VALIDATOR 😉 */
 
 export class ValidateParams {
+  @IsNumberString()
   public id: number;
 
   constructor(id: number) {
@@ -11,8 +13,10 @@ export class ValidateParams {
 }
 
 export class ValidateBody {
+  @IsString()
   public name: string;
 
+  @IsBoolean()
   public isAdult: boolean;
 
   public children: number;
