@@ -4,6 +4,6 @@ import { StandardProviderService } from './standard-provider.service';
 
 @Module({
   controllers: [StandardProviderController],
-  providers: [],
+  providers: [StandardProviderService],
 })
 export class StandardProviderModule {}

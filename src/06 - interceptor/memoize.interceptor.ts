@@ -7,9 +7,10 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 
-import { METHOD_METADATA } from '@nestjs/common/constants';
+import { METHOD_METADATA, PATH_METADATA } from '@nestjs/common/constants';
 
 import { Reflector } from '@nestjs/core';
+import { Request } from 'express';
 import { Observable, of, tap } from 'rxjs';
 
 @Injectable()
@@ -22,7 +23,23 @@ export class MemoizeInterceptor implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler<any>,
   ): Observable<any> | Promise<Observable<any>> {
-    return next.handle();
+    const req: Request = context.switchToHttp().getRequest();
+    const cacheKey = `${req.method}${req.path}${JSON.stringify(
+      req.params,
+    )}${JSON.stringify(req.query)}${JSON.stringify(req.body)}`;
+
+    //const cacheKey = `${context.getClass().name}.${context.getHandler().name}`;
+
+    if (this._dummyCache.has(cacheKey)) {
+      return this._dummyCache.get(cacheKey) as Observable<any>;
+    }
+
+    return next.handle().pipe(
+      tap((data) => {
+        this._dummyCache.set(cacheKey, data);
+        return data;
+      }),
+    );
   }
 }
 

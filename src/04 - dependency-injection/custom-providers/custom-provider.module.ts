@@ -3,6 +3,11 @@ import { CustomProviderAbstractService } from './custom-provider.service';
 import { MyCustomProviderService } from './my-custom-provider.service';
 
 @Module({
-  providers: [],
+  providers: [
+    {
+      provide: CustomProviderAbstractService,
+      useClass: MyCustomProviderService,
+    },
+  ],
 })
 export class CustomProviderModule {}

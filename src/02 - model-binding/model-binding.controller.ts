@@ -13,15 +13,26 @@ import { Request } from 'express';
 export class ModelBindingController {
   constructor() {}
 
-  @Get('read-param')
-  public readRouteParam(id: string) {}
+  @Get('read-param/:id')
+  public readRouteParam(@Param('id') id: string) {
+    return id;
+  }
 
   @Post('read-body')
-  public readBody(body: unknown) {}
+  public readBody(@Body() body: unknown) {
+    return body;
+  }
 
   @Get('statically-read-header')
-  public readStaticHeader(header: string) {}
+  public readStaticHeader(@Headers('x-static-x') header: string) {
+    return header;
+  }
 
   @Get('dynamically-read-header/:header')
-  public readHeaderParam(@Param('header') headerKey: string) {}
+  public readHeaderParam(
+    @Param('header') headerKey: string,
+    @Req() req: Request,
+  ) {
+    return req.headers[headerKey];
+  }
 }
