@@ -6,7 +6,9 @@
 
 The goal of this project is to assess the skills and knowledge in backend development.
 
-The project consists of implementing features on a NestJS backend
+The project consists of implementing features on a NestJS backend.
+
+To complete the assignment all the tests must pass.
 
 ## Installation
 
@@ -14,30 +16,11 @@ The project consists of implementing features on a NestJS backend
 $ yarn
 ```
 
-## Running the app
-
-```bash
-# development
-$ yarn start
-
-# watch mode
-$ yarn start:dev
-
-# production mode
-$ yarn start:prod
-```
-
 ## Test
 
 ```bash
-# unit tests
-$ yarn test
-
 # e2e tests
-$ yarn test:e2e
-
-# test coverage
-$ yarn test:cov
+$ yarn test:e2e --watch
 ```
 
 ## How to submit ?
